@@ -261,6 +261,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         // Disable the layer you want (e.g., layer 4)
         layer_off(4);
+        layer_on(0);
         // Return true to let the keycode fall through to the next layer
         return true;
       }
