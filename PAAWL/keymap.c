@@ -156,11 +156,6 @@ void pointing_device_init_user(void) {
 
 bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
   // All keys are not mouse keys when one shot auto mouse is enabled.
-  switch (keycode) {
-    case TO_AND_MOD_LGUI:
-    case DISABLE_LAYER_TRANSPARENT:
-      return true;
-  }
   return false;
 }
 
