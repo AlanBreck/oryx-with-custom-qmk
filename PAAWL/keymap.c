@@ -248,8 +248,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TO_AND_MOD_LGUI:
       if (record->event.pressed) {
         // Exit to layer 0
-        layer_off(4);
-        layer_on(0);
+        auto_mouse_layer_off();
         // Register left GUI modifier
         register_mods(MOD_BIT(KC_LGUI));
       } else {
@@ -260,8 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DISABLE_LAYER_TRANSPARENT:
       if (record->event.pressed) {
         // Disable the layer you want (e.g., layer 4)
-        layer_off(4);
-        layer_on(0);
+        auto_mouse_layer_off();
         // Return true to let the keycode fall through to the next layer
         return true;
       }
