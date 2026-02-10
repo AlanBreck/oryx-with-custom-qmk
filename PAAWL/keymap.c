@@ -18,7 +18,6 @@ enum custom_keycodes {
   NAVIGATOR_DEC_CPI,
   NAVIGATOR_TURBO,
   NAVIGATOR_AIM,
-  TO_AND_MOD_LGUI,
   DISABLE_LAYER_TRANSPARENT
 };
 
@@ -59,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, TO(0),          KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_BTN1,     KC_MS_BTN2,                                     KC_MS_BTN2,     KC_MS_BTN1,     DRAG_SCROLL,    KC_TRANSPARENT, MAC_MISSION_CONTROL, KC_TRANSPARENT,
-                                                    TO_AND_MOD_LGUI, KC_TRANSPARENT,                                 DISABLE_LAYER_TRANSPARENT, KC_MS_DBL_CLICK
+                                                    DISABLE_LAYER_TRANSPARENT, KC_TRANSPARENT,                                 DISABLE_LAYER_TRANSPARENT, KC_MS_DBL_CLICK
   ),
 };
 
@@ -180,6 +179,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
+
+    case DISABLE_LAYER_TRANSPARENT:
+      auto_mouse_keyevent(record->event.pressed);
+      return true;
+
     case MAC_MISSION_CONTROL:
       HCS(0x29F);
     case MAC_LOCK:
@@ -245,24 +249,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         rgblight_sethsv(152,229,244);
       }
       return false;
-    case TO_AND_MOD_LGUI:
-      if (record->event.pressed) {
-        // Exit to layer 0
-        auto_mouse_layer_off();
-        // Register left GUI modifier
-        register_mods(MOD_BIT(KC_LGUI));
-      } else {
-        // Release left GUI modifier
-        unregister_mods(MOD_BIT(KC_LGUI));
-      }
-      return false;
-    case DISABLE_LAYER_TRANSPARENT:
-      if (record->event.pressed) {
-        // Disable the layer you want (e.g., layer 4)
-        auto_mouse_layer_off();
-        // Return true to let the keycode fall through to the next layer
-        return true;
-      }
   }
   return true;
 }
