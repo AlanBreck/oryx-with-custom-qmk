@@ -172,7 +172,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
       layer_state_t state = remove_auto_mouse_layer(layer_state, true);
       set_auto_mouse_enable(false);
-      layer_state_set(state);
     } else {
       set_auto_mouse_enable(true);
     }
