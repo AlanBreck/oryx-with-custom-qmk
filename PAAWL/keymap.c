@@ -170,7 +170,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if ((record->event.key.row == 5 && record->event.key.col == 0) ||
     (record->event.key.row == 11 && record->event.key.col == 5)) {
     if (record->event.pressed) {
-      state = remove_auto_mouse_layer(layer_state, true)
+      state = remove_auto_mouse_layer(layer_state, true);
       set_auto_mouse_enable(false);
       layer_state_set(state);
     } else {
