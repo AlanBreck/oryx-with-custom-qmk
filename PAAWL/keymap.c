@@ -193,10 +193,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
     }
 
-    case DISABLE_LAYER_TRANSPARENT:
-      auto_mouse_keyevent(record->event.pressed);
-      return true;
-
     case MAC_MISSION_CONTROL:
       HCS(0x29F);
     case MAC_LOCK:
