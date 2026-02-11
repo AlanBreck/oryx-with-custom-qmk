@@ -171,9 +171,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     (record->event.key.row == 11 && record->event.key.col == 5)) {
     if (record->event.pressed) {
       auto_mouse_layer_off();
-      set_auto_mouse_enabled(false);
+      set_auto_mouse_enable(false);
     } else {
-      set_auto_mouse_enabled(true);
+      set_auto_mouse_enable(true);
     }
   }
 
