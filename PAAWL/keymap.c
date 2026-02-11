@@ -17,8 +17,7 @@ enum custom_keycodes {
   NAVIGATOR_INC_CPI,
   NAVIGATOR_DEC_CPI,
   NAVIGATOR_TURBO,
-  NAVIGATOR_AIM,
-  DISABLE_LAYER_TRANSPARENT
+  NAVIGATOR_AIM
 };
 
 
@@ -58,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, TO(0),          KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_BTN1,     KC_MS_BTN2,                                     KC_MS_BTN2,     KC_MS_BTN1,     DRAG_SCROLL,    KC_TRANSPARENT, MAC_MISSION_CONTROL, KC_TRANSPARENT,
-                                                    DISABLE_LAYER_TRANSPARENT, KC_TRANSPARENT,                                 DISABLE_LAYER_TRANSPARENT, KC_MS_DBL_CLICK
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_MS_DBL_CLICK
   ),
 };
 
@@ -162,6 +161,10 @@ bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uprintf("Row: %u, Col: %u, Keycode: %u\n",
+    record->event.key.row,
+    record->event.key.col,
+    keycode);
   switch (keycode) {
   case QK_MODS ... QK_MODS_MAX:
     // Mouse and consumer keys (volume, media) with modifiers work inconsistently across operating systems,
@@ -179,6 +182,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
+
+    // Check if this key is at a specific position (your dedicated mod keys)
+    // For example, if your dedicated Command keys are at specific row/col positions:
+    if ((record->event.key.row == 5 && record->event.key.col == 0) ||
+      (record->event.key.row == 11 && record->event.key.col == 5)) {
+      if (record->event.pressed) {
+        auto_mouse_trigger_reset(true);
+      }
+      return true;
+    }
 
     case DISABLE_LAYER_TRANSPARENT:
       auto_mouse_keyevent(record->event.pressed);
