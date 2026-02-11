@@ -159,8 +159,20 @@ bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
 
 
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Check if this key is at a specific position (your dedicated mod keys)
+  // For example, if your dedicated Command keys are at specific row/col positions:
+  if ((record->event.key.row == 5 && record->event.key.col == 0) ||
+    (record->event.key.row == 11 && record->event.key.col == 5)) {
+    if (record->event.pressed) {
+      set_auto_mouse_enable(false);
+      layer_state_set(remove_auto_mouse_layer(layer_state, true));
+    } else {
+      set_auto_mouse_enable(true);
+    }
+    return true;
+  }
+
   switch (keycode) {
   case QK_MODS ... QK_MODS_MAX:
     // Mouse and consumer keys (volume, media) with modifiers work inconsistently across operating systems,
@@ -178,16 +190,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
-
-    // Check if this key is at a specific position (your dedicated mod keys)
-    // For example, if your dedicated Command keys are at specific row/col positions:
-    if ((record->event.key.row == 5 && record->event.key.col == 0) ||
-      (record->event.key.row == 11 && record->event.key.col == 5)) {
-      if (record->event.pressed) {
-        auto_mouse_layer_off();
-      }
-      return true;
-    }
 
     case MAC_MISSION_CONTROL:
       HCS(0x29F);
