@@ -9,7 +9,7 @@
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
 #define AUTO_SHIFT_TIMEOUT 160
-#define SERIAL_NUMBER "PAAWL/x9d3vL"
+#define SERIAL_NUMBER "PAAWL/7vyDKo"
 #define LAYER_STATE_8BIT
 #define COMBO_COUNT 1
 #define HCS(report) host_consumer_send(record->event.pressed ? report : 0); return false
