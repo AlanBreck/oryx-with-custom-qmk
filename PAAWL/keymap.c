@@ -161,10 +161,6 @@ bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  uprintf("Row: %u, Col: %u, Keycode: %u\n",
-    record->event.key.row,
-    record->event.key.col,
-    keycode);
   switch (keycode) {
   case QK_MODS ... QK_MODS_MAX:
     // Mouse and consumer keys (volume, media) with modifiers work inconsistently across operating systems,
